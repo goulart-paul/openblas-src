@@ -1,1 +1,43 @@
 
+name: openblas-src
+
+on:
+  push:
+    branches:
+      - master
+  pull_request: {}
+  workflow_dispatch: {}
+
+jobs:
+  
+
+  linux:
+    runs-on: ubuntu-18.04
+    container:
+      image: rust
+    strategy:
+      fail-fast: false
+      matrix:
+        feature:
+          - ""
+          - static
+          - system
+    steps:
+    - uses: actions/checkout@v1
+      with:
+        submodules: 'recursive'
+    - name: Install gfortran by apt
+      run: |
+        apt update
+        apt install -y gfortran
+    - name: Install OpenBLAS by apt
+      run: |
+        apt update
+        apt install -y libopenblas-dev
+      if: ${{ contains(matrix.feature, 'system') }}
+    - uses: actions-rs/cargo@v1
+      with:
+        command: test
+        args: >
+          --features=${{ matrix.feature }}
+          --manifest-path=openblas-src/Cargo.toml
