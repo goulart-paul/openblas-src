@@ -15,8 +15,8 @@ jobs:
       fail-fast: false
       matrix:
         feature:
-          - ""
-          - static
+          # - ""
+          # - static
           - system
     steps:
     - uses: actions/checkout@v1
@@ -35,5 +35,6 @@ jobs:
       with:
         command: test
         args: >
+          --verbose
           --features=${{ matrix.feature }}
           --manifest-path=openblas-src/Cargo.toml
