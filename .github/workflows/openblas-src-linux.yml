@@ -36,5 +36,6 @@ jobs:
         command: test
         args: >
           --verbose
+          --release
           --features=${{ matrix.feature }}
           --manifest-path=openblas-src/Cargo.toml
