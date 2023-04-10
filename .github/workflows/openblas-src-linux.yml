@@ -17,7 +17,7 @@ jobs:
         feature:
           # - ""
           # - static
-          - static,system
+          - static
     steps:
     - uses: actions/checkout@v1
       with:
@@ -26,11 +26,11 @@ jobs:
     #   run: |
     #     apt update
     #     apt install -y gfortran
-    - name: Install OpenBLAS by apt
-      run: |
-        apt update
-        apt install -y libopenblas-dev
-      if: ${{ contains(matrix.feature, 'system') }}
+    # - name: Install OpenBLAS by apt
+    #   run: |
+    #     apt update
+    #     apt install -y libopenblas-dev
+    #   if: ${{ contains(matrix.feature, 'system') }}
     - uses: actions-rs/cargo@v1
       with:
         command: test
